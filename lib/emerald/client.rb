@@ -23,11 +23,12 @@ module Emerald
       Tempfile.new([@name, 'so']).path
     end
 
-    private
-
-    def go_helper_path
-      File.expand_path("emerald.go", File.dirname(__FILE__))
+    def self.method_missing(name, *args)
+      client = new(file_path: "#{name}.go", method: name)
+      client.call(args)
     end
+
+    private
 
     def open_dlib
       Fiddle.dlopen(so_path_from_file_path)
@@ -43,7 +44,7 @@ module Emerald
     end
 
     def compile_so!
-      unless system('go', 'build', '-buildmode=c-shared', '-o', path_to_tmp_file, @file_path, go_helper_path)
+      unless system('go', 'build', '-buildmode=c-shared', '-o', path_to_tmp_file, @file_path)
         raise Emerald::ConfigError, "Unable to Build Shared Library for #{@file_path}"
       end
     end
