@@ -25,6 +25,10 @@ module Emerald
 
     private
 
+    def go_helper_path
+      File.expand_path("emerald.go", File.dirname(__FILE__))
+    end
+
     def open_dlib
       Fiddle.dlopen(so_path_from_file_path)
     end
@@ -39,7 +43,7 @@ module Emerald
     end
 
     def compile_so!
-      unless system('go', 'build', '-buildmode=c-shared', '-o', path_to_tmp_file, @file_path)
+      unless system('go', 'build', '-buildmode=c-shared', '-o', path_to_tmp_file, @file_path, go_helper_path)
         raise Emerald::ConfigError, "Unable to Build Shared Library for #{@file_path}"
       end
     end
