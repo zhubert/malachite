@@ -24,7 +24,7 @@ module Emerald
     end
 
     def self.method_missing(name, *args)
-      client = new(file_path: "#{name}.go", method: name)
+      client = new(file_path: "#{name.to_s}.go", method: name)
       client.call(args)
     end
 
