@@ -4,7 +4,7 @@ module Emerald
       Rails.root.join('tmp', "#{@name}.so").to_s
     end
   end
-  class Railtie < Rails::Railstie
+  class EmeraldRailtie < Rails::Railtie
     initializer 'emerald.configure_rails_initialization' do
       Dir.glob(Rails.root.join('tmp', '*.so')).each do |file|
         File.delete(file)
