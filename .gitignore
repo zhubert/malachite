@@ -1,0 +1,11 @@
+Gemfile.lock
+.rvmrc
+.ruby-version
+tags
+*.swp
+dump.db
+.rbx
+coverage/
+vendor/
+.bundle/
+tmp/
