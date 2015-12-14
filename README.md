@@ -30,15 +30,20 @@ func upcase(data *C.char) *C.char {
 func main() {}
 ```
 
-Finally, make it into a .so via:
-
-    go build -buildmode=c-shared -o libfoo.so libfoo.go
-
 ### Invocation in Ruby
 
 
+```ruby
+client = Emerald::Client.new(file_path: 'upcase.go', method: 'upcase')
+client.call(['foo','bar'])
+```
+
+### Rails
+
+Gemfile:
 
 ```ruby
-client = Emerald::Client.new(file_path: 'upcase.go')
-
+gem 'emerald', github: 'zhubert/emerald'
 ```
+
+client = Emerald::Client.new(file_path: 'upcase.go', method: 'upcase')

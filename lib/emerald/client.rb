@@ -6,6 +6,7 @@ module Emerald
     def initialize(options = {})
       @file_path = options[:file_path]
       @method = options[:method]
+      @name = lib_name_from_file_path
       @func = Fiddle::Function.new(
         open_dlib[@method],
         [Fiddle::TYPE_VOIDP],
@@ -18,8 +19,8 @@ module Emerald
       Emerald.load_json(ptr.to_s)
     end
 
-    def path_to_tmp_file(name)
-      Tempfile.new([name, 'so'])
+    def path_to_tmp_file
+      Tempfile.new([@name, 'so'])
     end
 
     private
