@@ -46,4 +46,10 @@ Gemfile:
 gem 'emerald', github: 'zhubert/emerald'
 ```
 
-client = Emerald::Client.new(file_path: 'upcase.go', method: 'upcase')
+Assuming you put things into "app/go"
+
+```ruby
+go_file = Rails.root.join('go','upcase.go')
+c = Emerald::Client.new(file_path: go_file, method: 'upcase')
+c.call(["foo", "bar"])
+```

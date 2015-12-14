@@ -20,7 +20,7 @@ module Emerald
     end
 
     def path_to_tmp_file
-      Tempfile.new([@name, 'so'])
+      Tempfile.new([@name, 'so']).path
     end
 
     private
