@@ -14,7 +14,7 @@ module Emerald
       )
     end
 
-    def call(*args)
+    def call(args)
       ptr = @func.call(Emerald.dump_json(args))
       Emerald.load_json(ptr.to_s)
     end
@@ -23,7 +23,7 @@ module Emerald
       Tempfile.new([@name, 'so']).path
     end
 
-    def self.method_missing(name, *args)
+    def self.method_missing(name, args)
       client = new(file_path: "#{name.to_s}.go", method: name)
       client.call(args)
     end
