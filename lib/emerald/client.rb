@@ -14,7 +14,7 @@ module Emerald
       )
     end
 
-    def call(args)
+    def call(*args)
       ptr = @func.call(Emerald.dump_json(args))
       Emerald.load_json(ptr.to_s)
     end
