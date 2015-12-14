@@ -1,4 +1,4 @@
-package emerald
+package main
 
 import "encoding/json"
 

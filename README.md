@@ -2,6 +2,10 @@
 
 A RubyGem and Go Package which enables calling Go code from Ruby.
 
+### TODO
+
+* multiple source files (directories?)
+* marshalling helpers instead of go package?
 
 ### Write a Go Shared Object
 
@@ -49,7 +53,7 @@ gem 'emerald', github: 'zhubert/emerald'
 Assuming you put things into "app/go"
 
 ```ruby
-go_file = Rails.root.join('go','upcase.go')
-c = Emerald::Client.new(file_path: go_file, method: 'upcase')
+go_file = Rails.root.join('app', 'go', 'upcase.go')
+c = Emerald::Client.new(file_path: go_file.to_s, method: 'upcase')
 c.call(["foo", "bar"])
 ```
