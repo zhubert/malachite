@@ -44,7 +44,7 @@ module Emerald
     end
 
     def compile_so!
-      unless system('go', 'build', '-buildmode=c-shared', '-o', path_to_tmp_file, @file_path)
+      unless system('go', 'build', '-buildmode=c-shared', '-o', path_to_tmp_file.to_s, @file_path.to_s)
         raise Emerald::ConfigError, "Unable to Build Shared Library for #{@file_path}"
       end
     end
