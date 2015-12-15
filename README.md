@@ -5,7 +5,6 @@ A RubyGem and Go Package which enables calling Go code from Ruby.
 ### TODO
 
 * multiple source files (directories?)
-* marshalling helpers instead of go package?
 * complex arguments
 
 ### Write a Go Shared Object
@@ -20,6 +19,8 @@ import (
 	"github.com/zhubert/emerald/go/emerald"
 )
 
+func main() {}
+
 //export upcase
 func upcase(data *C.char) *C.char {
 	things := []string{}
@@ -27,14 +28,16 @@ func upcase(data *C.char) *C.char {
 	if err != nil {
 		return C.CString(err.Error())
 	}
-	upperCased := []string{}
+	return C.CString(emerald.Marshal(upcaseHandler(things)))
+}
+
+// actual app logic, the above is annoying boilerplate
+func upcaseHandler(things []string) (upperCased []string) {
 	for _, thing := range things {
 		upperCased = append(upperCased, strings.ToUpper(thing))
 	}
-	return C.CString(emerald.Marshal(upperCased))
+	return
 }
-
-func main() {}
 ```
 
 ### Rails
@@ -58,11 +61,4 @@ Or if you want more control...
 go_file = Rails.root.join('app', 'go', 'upcase.go')
 c = Emerald::Client.new(file_path: go_file.to_s, method: 'upcase')
 c.call(["foo", "bar"])
-```
-
-### Invocation in Ruby
-
-```ruby
-client = Emerald::Client.new(file_path: 'upcase.go', method: 'upcase')
-client.call(['foo','bar'])
 ```
