@@ -39,8 +39,8 @@ module Emerald
       source_go = File.read(@file_path)
       substituted_boilerplate = boiler.gsub(/XXXXXX/, "[]string{}")
       File.open(@go_file, "w") do |file|
-        file.puts substituted_boilerplate
         file.puts source_go
+        file.puts substituted_boilerplate
       end
     end
 
