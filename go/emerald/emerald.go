@@ -2,23 +2,15 @@ package emerald
 
 import "encoding/json"
 
-import "C"
-
-type Data *C.char
-
-func Unmarshal(data Data, v interface{}) error {
-	err := json.Unmarshal([]byte(C.GoString(data)), &v)
+func Unmarshal(data string, v interface{}) error {
+	err := json.Unmarshal([]byte(data), &v)
 	return err
 }
 
-func Error(err error) Data {
-	return C.CString(err.Error())
-}
-
-func Marshal(v interface{}) Data {
+func Marshal(v interface{}) string {
 	b, err := json.Marshal(v)
 	if err != nil {
-		return C.CString("{}")
+		return "{}"
 	}
-	return C.CString(string(b))
+	return string(b)
 }

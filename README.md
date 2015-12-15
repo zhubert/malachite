@@ -14,45 +14,29 @@ A RubyGem and Go Package which enables calling Go code from Ruby.
 package main
 
 import (
-	"encoding/json"
+	"C"
 	"strings"
+
+	"github.com/zhubert/emerald/go/emerald"
 )
-import "C"
 
 //export upcase
 func upcase(data *C.char) *C.char {
 	things := []string{}
-	err := Unmarshal(data, &things)
+	err := other.Unmarshal(C.GoString(data), &things)
 	if err != nil {
-		return Error(err)
+		return C.CString(other.Error(err))
 	}
 	upperCased := []string{}
 	for _, thing := range things {
 		upperCased = append(upperCased, strings.ToUpper(thing))
 	}
-	return Marshal(upperCased)
+	return C.CString(other.Marshal(upperCased))
 }
 
 func main() {}
-
-// the following needs to be extracted somehow
-func Unmarshal(data *C.char, v interface{}) error {
-	err := json.Unmarshal([]byte(C.GoString(data)), &v)
-	return err
-}
-
-func Error(err error) *C.char {
-	return C.CString(err.Error())
-}
-
-func Marshal(v interface{}) *C.char {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return C.CString("{}")
-	}
-	return C.CString(string(b))
-}
 ```
+
 ### Rails
 
 Gemfile:
