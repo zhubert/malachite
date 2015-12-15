@@ -23,15 +23,15 @@ import (
 //export upcase
 func upcase(data *C.char) *C.char {
 	things := []string{}
-	err := other.Unmarshal(C.GoString(data), &things)
+	err := emerald.Unmarshal(C.GoString(data), &things)
 	if err != nil {
-		return C.CString(other.Error(err))
+		return C.CString(err.Error())
 	}
 	upperCased := []string{}
 	for _, thing := range things {
 		upperCased = append(upperCased, strings.ToUpper(thing))
 	}
-	return C.CString(other.Marshal(upperCased))
+	return C.CString(emerald.Marshal(upperCased))
 }
 
 func main() {}
