@@ -4,16 +4,18 @@ import "encoding/json"
 
 import "C"
 
-func Unmarshal(data *C.char, v interface{}) error {
+type Data *C.char
+
+func Unmarshal(data Data, v interface{}) error {
 	err := json.Unmarshal([]byte(C.GoString(data)), &v)
 	return err
 }
 
-func Error(err error) *C.char {
+func Error(err error) Data {
 	return C.CString(err.Error())
 }
 
-func Marshal(v interface{}) *C.char {
+func Marshal(v interface{}) Data {
 	b, err := json.Marshal(v)
 	if err != nil {
 		return C.CString("{}")
