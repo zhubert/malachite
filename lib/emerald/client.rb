@@ -35,7 +35,7 @@ module Emerald
     private
 
     def boilerplate_to_tmp
-      boiler = File.read(File.expand_path('./boilerplate.go.tmpl', __FILE__))
+      boiler = File.read(File.expand_path('../boilerplate.go.tmpl', __FILE__))
       source_go = File.read(@file_path)
       substituted_boilerplate = boiler.gsub(/XXXXXX/, "[]string{}")
       File.open(@go_file, "w") do |file|
