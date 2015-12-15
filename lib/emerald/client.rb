@@ -37,9 +37,13 @@ module Emerald
     def boilerplate_to_tmp
       boiler = File.read(File.expand_path('../boilerplate.go.tmpl', __FILE__))
       source_go = File.read(@file_path)
+      trimmed_source = source_go.gsub(/package main/, "")
       substituted_boilerplate = boiler.gsub(/XXXXXX/, "[]string{}")
       File.open(@go_file, "w") do |file|
-        file.puts source_go
+        file.puts "package main\n"
+        file.puts "import \"encoding/json\"\n"
+        file.puts "import \"C\"\n"
+        file.puts trimmed_source
         file.puts substituted_boilerplate
       end
     end
