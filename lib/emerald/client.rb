@@ -5,8 +5,8 @@ module Emerald
   class Client
     def initialize(file_path)
       @file_path = file_path
-      @go_file = path_to_go_file
       @name = lib_name_from_file_path
+      @go_file = path_to_go_file
       @func = Fiddle::Function.new(
         open_dlib['call'],
         [Fiddle::TYPE_VOIDP],
