@@ -1,0 +1,30 @@
+package main
+
+import "encoding/json"
+
+import "C"
+
+//export call
+func call(data *C.char) *C.char {
+	things := XXXXXX
+	err := Unmarshal(C.GoString(data), &things)
+	if err != nil {
+		return C.CString(err.Error())
+	}
+	return C.CString(Marshal(handler(things)))
+}
+
+func main() {}
+
+func Unmarshal(data string, v interface{}) error {
+	err := json.Unmarshal([]byte(data), &v)
+	return err
+}
+
+func Marshal(v interface{}) string {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return "{}"
+	}
+	return string(b)
+}

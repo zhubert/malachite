@@ -3,12 +3,12 @@ require 'tempfile'
 
 module Emerald
   class Client
-    def initialize(options = {})
-      @file_path = options[:file_path]
-      @method = options[:method]
+    def initialize(file_path)
+      @file_path = file_path
+      @go_file = path_to_go_file
       @name = lib_name_from_file_path
       @func = Fiddle::Function.new(
-        open_dlib[@method],
+        open_dlib['call'],
         [Fiddle::TYPE_VOIDP],
         Fiddle::TYPE_VOIDP
       )
@@ -23,12 +23,26 @@ module Emerald
       Tempfile.new([@name, 'so']).path
     end
 
+    def path_to_go_file
+      Tempfile.new([@name, 'go']).path
+    end
+
     def self.method_missing(name, args)
-      client = new(file_path: "#{name.to_s}.go", method: name)
+      client = new("#{name.to_s}.go")
       client.call(args)
     end
 
     private
+
+    def boilerplate_to_tmp
+      boiler = File.read('boilerplate.go.tmpl')
+      source_go = File.read(@file_path)
+      substituted_boilerplate = boiler.gsub(/XXXXXX/, "[]string{}")
+      File.open(@go_file) do |file|
+        file.puts substituted_boilerplate
+        file.puts source_go
+      end
+    end
 
     def open_dlib
       Fiddle.dlopen(so_path_from_file_path)
@@ -44,7 +58,7 @@ module Emerald
     end
 
     def compile_so!
-      unless system('go', 'build', '-buildmode=c-shared', '-o', path_to_tmp_file.to_s, @file_path.to_s)
+      unless system('go', 'build', '-buildmode=c-shared', '-o', path_to_tmp_file.to_s, @go_file.to_s)
         raise Emerald::ConfigError, "Unable to Build Shared Library for #{@file_path}"
       end
     end

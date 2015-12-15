@@ -3,15 +3,21 @@ module Emerald
     def path_to_tmp_file
       Rails.root.join('tmp', "#{@name}.so").to_s
     end
+    def path_to_go_file
+      Rails.root.join('tmp', "#{@name}.go").to_s
+    end
     def self.method_missing(name, args)
       file_path = Rails.root.join('app','go',"#{name.to_s}.go")
-      client = new(file_path: file_path, method: name.to_s)
+      client = new(file_path)
       client.call(args)
     end
   end
   class EmeraldRailtie < Rails::Railtie
     initializer 'emerald.configure_rails_initialization' do
       Dir.glob(Rails.root.join('tmp', '*.so')).each do |file|
+        File.delete(file)
+      end
+      Dir.glob(Rails.root.join('tmp', '*.go')).each do |file|
         File.delete(file)
       end
       Dir.glob(Rails.root.join('tmp', '*.h')).each do |file|
