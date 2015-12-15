@@ -38,10 +38,11 @@ module Emerald
       boiler = File.read('boilerplate.go.tmpl')
       source_go = File.read(@file_path)
       substituted_boilerplate = boiler.gsub(/XXXXXX/, "[]string{}")
-      File.open(@go_file) do |file|
+      new_file = File.open(@go_file) do |file|
         file.puts substituted_boilerplate
         file.puts source_go
       end
+      new_file.close
     end
 
     def open_dlib
@@ -58,6 +59,7 @@ module Emerald
     end
 
     def compile_so!
+      boilerplate_to_tmp
       unless system('go', 'build', '-buildmode=c-shared', '-o', path_to_tmp_file.to_s, @go_file.to_s)
         raise Emerald::ConfigError, "Unable to Build Shared Library for #{@file_path}"
       end
