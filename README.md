@@ -50,3 +50,7 @@ Villainy.
 * First time function is called, Emerald will build a shared library from your Go code
 * Your Go code gets "extended" with a boilerplate template, similar to a generator in Rails (so you don't have to write the serialization crap over and over)
 * It then uses Ruby's Fiddle to call the shared library
+
+### Ruby 2.2.4+
+
+It's strongly recommended to use the [newest release of Ruby](https://www.ruby-lang.org/en/news/2015/12/16/unsafe-tainted-string-usage-in-fiddle-and-dl-cve-2015-7551/) as there was a security issue with older versions of Fiddle.
