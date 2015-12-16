@@ -42,7 +42,7 @@ module Emerald
 
     def handler_type(handler_code)
       match = /^func handler\(\w+ (.*?)\)/.match(handler_code)
-      match[0]
+      match[1]
     end
   end
 end
