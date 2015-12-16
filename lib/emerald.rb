@@ -1,5 +1,4 @@
 require 'emerald/version'
-require 'emerald/errors'
 fail "Emerald #{Emerald::VERSION} does not support Ruby 1.9" if RUBY_VERSION < '2.0.0'
 
 require 'json'
