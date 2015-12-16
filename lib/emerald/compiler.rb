@@ -5,14 +5,20 @@ module Emerald
       @go_file = go_file
     end
 
+    def compile
+      return path_to_tmp_file if File.exist?(path_to_tmp_file)
+      compile!
+    end
+
+    private
+
     def compile!
       copy_boilerplate_to_tmp
       unless system('go', 'build', '-buildmode=c-shared', '-o', path_to_tmp_file.to_s, @go_file.to_s)
         fail Emerald::ConfigError, "Unable to Build Shared Library for #{@file_path}"
       end
+      path_to_tmp_file
     end
-
-    private
 
     def copy_boilerplate_to_tmp
       File.open(@go_file, 'w') do |file|

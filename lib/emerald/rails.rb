@@ -1,12 +1,14 @@
 module Emerald
-  class Client
+  class Compiler
     def path_to_tmp_file
       Rails.root.join('tmp', "#{@name}.so").to_s
     end
-
+  end
+  class Client
     def path_to_go_file
       Rails.root.join('tmp', "#{@name}.go").to_s
     end
+
     def self.method_missing(name, args)
       file_path = Rails.root.join('app', 'go', "#{name}.go")
       client = new(file_path)

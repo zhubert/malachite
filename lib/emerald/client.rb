@@ -30,8 +30,7 @@ module Emerald
     end
 
     def shared_object_path
-      Emerald::Compiler.new(@file_path, @go_file).compile! unless File.exist?(path_to_tmp_file)
-      path_to_tmp_file
+      Emerald::Compiler.new(@file_path, @go_file).compile
     end
   end
 end

@@ -1,9 +1,10 @@
 module Emerald
-  class Client
+  class Compiler
     def path_to_tmp_file
       Tempfile.new([@name, 'so']).path
     end
-
+  end
+  class Client
     def path_to_go_file
       Tempfile.new([@name, 'go']).path
     end
