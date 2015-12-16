@@ -26,23 +26,18 @@ func handler(things []string) (upperCased []string) {
 
 ### Rails
 
-Gemfile:
+Make a subdirectory of "app" called "go".
+
+Add this to your Gemfile:
 
 ```ruby
-gem 'emerald', github: 'zhubert/emerald'
+gem 'emerald', github: 'zhubert/emerald', branch: 'zhubert/crazy'
 ```
-Assuming you put things into "app/go" and want to go with a more Railsy approach:
+
+Then use your function from Rails:
 
 ```ruby
 Emerald::Client.upcase(["foo","bar"])
 ```
 
-Emerald will assume you have a file named `upcase.go`.
-
-Or if you want more control...
-
-```ruby
-go_file = Rails.root.join('app', 'go', 'upcase.go')
-c = Emerald::Client.new(go_file.to_s)
-c.call(["foo", "bar"])
-```
+Emerald will assume you have a file named `upcase.go`, which has the code from the Go example above.
