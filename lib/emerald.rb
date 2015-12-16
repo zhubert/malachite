@@ -1,10 +1,12 @@
 require 'emerald/version'
+require 'emerald/errors'
 fail "Emerald #{Emerald::VERSION} does not support Ruby 1.9" if RUBY_VERSION < '2.0.0'
 
 require 'json'
 require 'fiddle'
 
 require 'emerald/client'
+require 'emerald/compiler'
 
 module Emerald
   def self.load_json(string)
@@ -16,4 +18,8 @@ module Emerald
   end
 end
 
-require 'emerald/rails' if defined?(::Rails::Engine)
+if defined?(::Rails::Engine)
+  require 'emerald/rails'
+else
+  require 'emerald/ruby'
+end

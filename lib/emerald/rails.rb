@@ -3,11 +3,12 @@ module Emerald
     def path_to_tmp_file
       Rails.root.join('tmp', "#{@name}.so").to_s
     end
+
     def path_to_go_file
       Rails.root.join('tmp', "#{@name}.go").to_s
     end
     def self.method_missing(name, args)
-      file_path = Rails.root.join('app','go',"#{name.to_s}.go")
+      file_path = Rails.root.join('app', 'go', "#{name}.go")
       client = new(file_path)
       client.call(args)
     end
