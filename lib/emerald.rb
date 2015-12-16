@@ -4,6 +4,7 @@ fail "Emerald #{Emerald::VERSION} does not support Ruby 1.9" if RUBY_VERSION < '
 require 'json'
 require 'fiddle'
 
+require 'emerald/errors'
 require 'emerald/client'
 require 'emerald/compiler'
 

@@ -6,12 +6,7 @@ module Emerald
     def initialize(file_path)
       @file_path = file_path
       @name = library_name
-      @go_file = path_to_go_file
-      @func = Fiddle::Function.new(
-        open_dlib['call'],
-        [Fiddle::TYPE_VOIDP],
-        Fiddle::TYPE_VOIDP
-      )
+      @func = Fiddle::Function.new(open_dlib['call'], [Fiddle::TYPE_VOIDP], Fiddle::TYPE_VOIDP)
     end
 
     def call(args)
@@ -30,7 +25,7 @@ module Emerald
     end
 
     def shared_object_path
-      Emerald::Compiler.new(@file_path, @go_file).compile
+      Emerald::Compiler.new(@file_path).compile
     end
   end
 end

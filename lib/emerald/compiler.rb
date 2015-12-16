@@ -1,8 +1,8 @@
 module Emerald
   class Compiler
-    def initialize(file_path, go_file)
+    def initialize(file_path)
       @file_path = file_path
-      @go_file = go_file
+      @go_file = path_to_go_file
     end
 
     def compile

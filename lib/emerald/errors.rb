@@ -1,3 +1,3 @@
 module Emerald
-  class ConfigError < ConfigError; end
+  class ConfigError < StandardError; end
 end

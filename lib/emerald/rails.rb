@@ -3,16 +3,15 @@ module Emerald
     def path_to_tmp_file
       Rails.root.join('tmp', "#{@name}.so").to_s
     end
-  end
-  class Client
+
     def path_to_go_file
       Rails.root.join('tmp', "#{@name}.go").to_s
     end
-
+  end
+  class Client
     def self.method_missing(name, args)
-      file_path = Rails.root.join('app', 'go', "#{name}.go")
-      client = new(file_path)
-      client.call(args)
+      path_to_source = Rails.root.join('app', 'go', "#{name}.go")
+      new(path_to_source).call(args)
     end
   end
   class EmeraldRailtie < Rails::Railtie
