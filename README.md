@@ -121,7 +121,7 @@ It's strongly recommended to use the [newest release of Ruby](https://www.ruby-l
 
 ### TODO
 
-* Fix "runtime/cgo: could not obtain pthread_keys"
+* Fix "runtime/cgo: could not obtain pthread_keys" by combining all Go code into one shared object
 * Rake task to run corresponding go tests
 * Error handling
 * Benchmark performance...roughly
