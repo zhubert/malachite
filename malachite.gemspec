@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'emerald/version'
+require 'malachite/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'emerald'
-  spec.version       = Emerald::VERSION
+  spec.name          = 'malachite'
+  spec.version       = Malachite::VERSION
   spec.authors       = ['Zack Hubert']
   spec.email         = ['zhubert@gmail.com']
 

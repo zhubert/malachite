@@ -1,4 +1,4 @@
-### Emerald
+### Malachite
 
 A RubyGem which enables calling Go code from Rails.
 
@@ -7,7 +7,7 @@ A RubyGem which enables calling Go code from Rails.
 Add this to your Gemfile:
 
 ```ruby
-gem 'emerald', github: 'zhubert/emerald'
+gem 'malachite', github: 'zhubert/malachite'
 ```
 
 Make a subdirectory of "app" called "go".
@@ -39,7 +39,7 @@ func handler(things []string) (upperCased []string) {
 Then use your function from Rails:
 
 ```ruby
-Emerald::Client.upcase(["foo","bar"])
+Malachite::Client.upcase(["foo","bar"])
 => ["FOO", "BAR"]
 ```
 
@@ -47,7 +47,7 @@ Emerald::Client.upcase(["foo","bar"])
 
 Villainy.
 
-* First time function is called, Emerald will build a shared library from your Go code
+* First time function is called, Malachite will build a shared library from your Go code
 * Your Go code gets "extended" with a boilerplate template, similar to a generator in Rails (so you don't have to write the serialization crap over and over)
 * It then uses Ruby's Fiddle to call the shared library
 

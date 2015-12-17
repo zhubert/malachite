@@ -1,4 +1,4 @@
-module Emerald
+module Malachite
   class Compiler
     def path_to_tmp_file
       Tempfile.new([@name, 'so']).path

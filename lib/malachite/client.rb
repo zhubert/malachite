@@ -1,7 +1,7 @@
 require 'fiddle'
 require 'tempfile'
 
-module Emerald
+module Malachite
   class Client
     def initialize(file_path)
       @file_path = file_path
@@ -10,8 +10,8 @@ module Emerald
     end
 
     def call(args)
-      ptr = @func.call(Emerald.dump_json(args))
-      Emerald.load_json(ptr.to_s)
+      ptr = @func.call(Malachite.dump_json(args))
+      Malachite.load_json(ptr.to_s)
     end
 
     private
@@ -25,7 +25,7 @@ module Emerald
     end
 
     def shared_object_path
-      Emerald::Compiler.new(@file_path, @name).compile
+      Malachite::Compiler.new(@file_path, @name).compile
     end
   end
 end

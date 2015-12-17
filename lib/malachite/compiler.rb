@@ -1,4 +1,4 @@
-module Emerald
+module Malachite
   class Compiler
     def initialize(file_path, name)
       @file_path = file_path
@@ -16,7 +16,7 @@ module Emerald
     def compile!
       copy_boilerplate_to_tmp
       unless system('go', 'build', '-buildmode=c-shared', '-o', path_to_tmp_file.to_s, @go_file.to_s)
-        fail Emerald::ConfigError, "Unable to Build Shared Library for #{@file_path}"
+        fail Malachite::ConfigError, "Unable to Build Shared Library for #{@file_path}"
       end
       path_to_tmp_file
     end
