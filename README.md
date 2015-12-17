@@ -44,7 +44,31 @@ Then use your function from Rails:
 Malachite::Client.upcase(["foo","bar"])
 => ["FOO", "BAR"]
 ```
+Or if you have more interesting data.
 
+```go
+package main
+
+import "strings"
+
+type Person struct {
+	Name string `json:"name"`
+	Age  string `json:"age"`
+}
+
+func Handler(people []Person) (upperCasedPeople []Person) {
+	for _, person := range people {
+		upCase := Person{strings.ToUpper(person.Name), person.Age}
+		upperCasedPeople = append(upperCasedPeople, upCase)
+	}
+	return
+}
+```
+
+```ruby
+peeps = [{name: 'Peter', age: '27'},{name: 'Tim', age: '30'}]
+Malachite::Client.structured(peeps)
+```
 ### How Does it Work?
 
 Some code trickery, quite honestly.

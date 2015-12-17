@@ -42,7 +42,7 @@ module Malachite
     end
 
     def handler_type(handler_code)
-      match = /^func handler\(\w+ (.*?)\)/.match(handler_code)
+      match = /^func Handler\(\w+ (.*?)\)/.match(handler_code)
       match[1]
     end
   end
