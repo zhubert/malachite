@@ -5,7 +5,7 @@ func call(data *C.char) *C.char {
 	if err != nil {
 		return C.CString(err.Error())
 	}
-	return C.CString(Marshal(handler(things)))
+	return C.CString(Marshal(Handler(things)))
 }
 
 func main() {}

@@ -16,9 +16,9 @@ Make a subdirectory of "app" called "go".
 
 ### Write a Go Function
 
-Thanks to some code villainy, you can just write a normal function with some "opinionated" requirements:
+You can just write a normal function with some "opinionated" requirements:
 
-* it must be called handler
+* it must be called Handler
 * it can only have one argument
 
 For instance, if you wanted to upcase strings more quickly in your Rails app, you'd put the following in the file "app/go/upcase.go":
@@ -30,7 +30,7 @@ import (
 	"strings"
 )
 
-func handler(things []string) (upperCased []string) {
+func Handler(things []string) (upperCased []string) {
 	for _, thing := range things {
 		upperCased = append(upperCased, strings.ToUpper(thing))
 	}
@@ -47,11 +47,12 @@ Malachite::Client.upcase(["foo","bar"])
 
 ### How Does it Work?
 
-Villainy.
+Some code trickery, quite honestly.
 
-* First time function is called, Malachite will build a shared library from your Go code
-* Your Go code gets "extended" with a boilerplate template, similar to a generator in Rails (so you don't have to write the serialization crap over and over)
+* The first time the function is called, Malachite will build a shared library from your Go code
+* Your Go code gets "extended" with a boilerplate template, similar to a generator in Rails
 * It then uses Ruby's Fiddle to call the shared library
+* Arguments are passed back and forth via JSON
 
 ### Ruby 2.2.4+
 
