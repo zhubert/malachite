@@ -6,12 +6,15 @@ module Malachite
     def initialize(file_path)
       @file_path = file_path
       @name = library_name
-      @func = Fiddle::Function.new(open_dlib['call'], [Fiddle::TYPE_VOIDP], Fiddle::TYPE_VOIDP)
+      @dylib = open_dlib
+      @func = Fiddle::Function.new(@dylib['call'], [Fiddle::TYPE_VOIDP], Fiddle::TYPE_VOIDP)
     end
 
     def call(args)
       ptr = @func.call(Malachite.dump_json(args))
-      Malachite.load_json(ptr.to_s)
+      json = Malachite.load_json(ptr.to_s)
+      @dylib.close
+      json
     end
 
     private

@@ -44,7 +44,8 @@ Then use your function from Rails:
 Malachite::Client.upcase(["foo","bar"])
 => ["FOO", "BAR"]
 ```
-Or if you have more interesting data.
+
+Or if you have more interesting data organize it with a struct:
 
 ```go
 package main
@@ -68,6 +69,42 @@ func Handler(people []Person) (upperCasedPeople []Person) {
 ```ruby
 peeps = [{name: 'Peter', age: '27'},{name: 'Tim', age: '30'}]
 Malachite::Client.structured(peeps)
+=> [{"name"=>"PETER", "age"=>"27"}, {"name"=>"TIM", "age"=>"30"}]
+```
+
+Or even something totally arbitrary:
+
+```go
+package main
+
+import "strings"
+
+type Person struct {
+	Name string `json:"name"`
+}
+
+type Foo struct {
+	Friends []Person `json:"friends"`
+	Enemies []Person `json:"enemies"`
+}
+
+func Handler(foo Foo) (frenemies []Person) {
+	for _, friend := range foo.Friends {
+		for _, enemy := range foo.Enemies {
+			if friend.Name == enemy.Name {
+				frenemies = append(frenemies, friend)
+			}
+		}
+	}
+	return
+}
+```
+
+```ruby
+friends = [{name: 'Peter'},{name: 'Tim'}]
+enemies = [{name: 'Peter'},{name: 'Zeb'}]
+Malachite::Client.frenemies({friends: friends, enemies: enemies})
+=> [{"name"=>"Peter"}]
 ```
 ### How Does it Work?
 
@@ -84,7 +121,7 @@ It's strongly recommended to use the [newest release of Ruby](https://www.ruby-l
 
 ### TODO
 
-* Support arbitrary structs
+* Fix "runtime/cgo: could not obtain pthread_keys"
 * Rake task to run corresponding go tests
 * Error handling
 * Benchmark performance...roughly
