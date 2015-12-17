@@ -2,8 +2,8 @@ module Malachite
   class Compiler
     def initialize(file_path, name)
       @file_path = file_path
-      @go_file = path_to_go_file
       @name = name
+      @go_file = path_to_go_file
     end
 
     def compile
