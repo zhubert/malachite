@@ -4,6 +4,8 @@ A RubyGem which enables calling Go code from Rails.
 
 ### Installation
 
+Install [Go 1.5 or later](https://golang.org/doc/install) on relevant machines.
+
 Add this to your Gemfile:
 
 ```ruby
