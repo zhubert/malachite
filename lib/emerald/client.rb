@@ -25,7 +25,7 @@ module Emerald
     end
 
     def shared_object_path
-      Emerald::Compiler.new(@file_path).compile
+      Emerald::Compiler.new(@file_path, @name).compile
     end
   end
 end
