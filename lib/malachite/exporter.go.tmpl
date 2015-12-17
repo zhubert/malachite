@@ -1,0 +1,9 @@
+//export callXXXXXX
+func callXXXXXX(data *C.char) *C.char {
+	things := YYYYYY
+	err := Unmarshal(C.GoString(data), &things)
+	if err != nil {
+		return C.CString(err.Error())
+	}
+	return C.CString(Marshal(HandleXXXXXX(things)))
+}

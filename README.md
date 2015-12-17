@@ -14,12 +14,13 @@ gem 'malachite', github: 'zhubert/malachite'
 
 Make a subdirectory of "app" called "go".
 
-### Write a Go Function
+### Write Some Go Functions
 
-You can just write a normal function with some "opinionated" requirements:
+Everything in "app/go" will get compiled into one namespace, so to get it to work with
+Malachite, you need to:
 
-* it must be called Handler
-* it can only have one argument
+* name the methods you want exported like: "HandleFoo"
+* the Handle methods can only take one argument (use structs for more complexity)
 
 For instance, if you wanted to upcase strings more quickly in your Rails app, you'd put the following in the file "app/go/upcase.go":
 
@@ -30,7 +31,7 @@ import (
 	"strings"
 )
 
-func Handler(things []string) (upperCased []string) {
+func HandleUpcase(things []string) (upperCased []string) {
 	for _, thing := range things {
 		upperCased = append(upperCased, strings.ToUpper(thing))
 	}
@@ -57,7 +58,7 @@ type Person struct {
 	Age  string `json:"age"`
 }
 
-func Handler(people []Person) (upperCasedPeople []Person) {
+func HandleStructured(people []Person) (upperCasedPeople []Person) {
 	for _, person := range people {
 		upCase := Person{strings.ToUpper(person.Name), person.Age}
 		upperCasedPeople = append(upperCasedPeople, upCase)
@@ -88,7 +89,7 @@ type Foo struct {
 	Enemies []Person `json:"enemies"`
 }
 
-func Handler(foo Foo) (frenemies []Person) {
+func HandleFrenemies(foo Foo) (frenemies []Person) {
 	for _, friend := range foo.Friends {
 		for _, enemy := range foo.Enemies {
 			if friend.Name == enemy.Name {
@@ -106,12 +107,12 @@ enemies = [{name: 'Peter'},{name: 'Zeb'}]
 Malachite::Client.frenemies({friends: friends, enemies: enemies})
 => [{"name"=>"Peter"}]
 ```
+
 ### How Does it Work?
 
 Some code trickery, quite honestly.
 
 * The first time the function is called, Malachite will build a shared library from your Go code
-* Your Go code gets "extended" with a boilerplate template, similar to a generator in Rails
 * It then uses Ruby's Fiddle to call the shared library
 * Arguments are passed back and forth via JSON
 
@@ -121,7 +122,6 @@ It's strongly recommended to use the [newest release of Ruby](https://www.ruby-l
 
 ### TODO
 
-* Fix "runtime/cgo: could not obtain pthread_keys" by combining all Go code into one shared object
 * Rake task to run corresponding go tests
 * Error handling
 * Benchmark performance...roughly

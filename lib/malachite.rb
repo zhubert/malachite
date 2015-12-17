@@ -21,5 +21,5 @@ end
 if defined?(::Rails::Engine)
   require 'malachite/rails'
 else
-  require 'malachite/ruby'
+  fail "Malachite #{Malachite::VERSION} is a Rails-only Gem"
 end

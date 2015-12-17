@@ -1,12 +1,6 @@
-//export call
-func call(data *C.char) *C.char {
-	things := XXXXXX
-	err := Unmarshal(C.GoString(data), &things)
-	if err != nil {
-		return C.CString(err.Error())
-	}
-	return C.CString(Marshal(Handler(things)))
-}
+package main
+import "encoding/json"
+import "C"
 
 func main() {}
 
