@@ -3,6 +3,7 @@ Gemfile.lock
 .ruby-version
 tags
 *.swp
+*.gem
 dump.db
 .rbx
 coverage/
