@@ -6,6 +6,7 @@ require 'fiddle'
 
 require 'malachite/errors'
 require 'malachite/client'
+require 'malachite/file_compiler'
 require 'malachite/compiler'
 
 module Malachite
