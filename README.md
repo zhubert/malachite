@@ -112,9 +112,11 @@ Malachite::Client.frenemies({friends: friends, enemies: enemies})
 
 Some code trickery, quite honestly.
 
-* The first time the function is called, Malachite will build a shared library from your Go code
+* The first time the function is called, Malachite will build a shared library from all the Go code in your "app/go" folder
 * It then uses Ruby's Fiddle to call the shared library
 * Arguments are passed back and forth via JSON
+
+Because of the JSON step, you'll only see real performance gains on computationally difficult tasks. Ruby's JSON conversion is a large tax.
 
 ### Ruby 2.2.4+
 
@@ -122,6 +124,5 @@ It's strongly recommended to use the [newest release of Ruby](https://www.ruby-l
 
 ### TODO
 
-* Rake task to run corresponding go tests
 * Error handling
 * Benchmark performance...roughly
