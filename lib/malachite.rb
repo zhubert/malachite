@@ -5,6 +5,7 @@ require 'json'
 require 'fiddle'
 
 require 'malachite/errors'
+require 'malachite/function'
 require 'malachite/client'
 require 'malachite/file_compiler'
 require 'malachite/compiler'

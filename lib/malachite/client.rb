@@ -1,33 +1,30 @@
-require 'fiddle'
-require 'tempfile'
-
 module Malachite
   class Client
-    def initialize
-      @dylib = open_dlib
+    def initialize(name, args)
+      @name = name
+      @args = args
     end
 
-    def call_method(name, args)
-      method_name = "call#{name.to_s.camelize}"
-      @func = Fiddle::Function.new(@dylib[method_name], [Fiddle::TYPE_VOIDP], Fiddle::TYPE_VOIDP)
-      ptr = @func.call(Malachite.dump_json(args))
-      Malachite.load_json(ptr.to_s)
+    def call
+      response_from_json(json_function_result)
     end
 
     def self.method_missing(name, args)
-      new.call_method(name, args)
+      new(name, args).call
     end
 
     private
 
-    def open_dlib
-      Fiddle.dlopen(shared_object_path)
-    rescue Fiddle::DLError
-      raise Malachite::DLError
+    def json_function_result
+      Malachite::Function.new(@name, args_to_json).call
     end
 
-    def shared_object_path
-      Malachite::Compiler.new.compile
+    def args_to_json
+      Malachite.dump_json(@args)
+    end
+
+    def response_from_json(response)
+      Malachite.load_json(response)
     end
   end
 end

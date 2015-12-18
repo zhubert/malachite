@@ -124,5 +124,6 @@ It's strongly recommended to use the [newest release of Ruby](https://www.ruby-l
 
 ### TODO
 
+* Confirm Go's existence, raise exception on build
 * Error handling
 * Benchmark performance...roughly
