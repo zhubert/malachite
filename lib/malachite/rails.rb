@@ -10,6 +10,9 @@ module Malachite
       Dir.glob(Rails.root.join('tmp', '*.h')).each do |file|
         File.delete(file)
       end
+      rake_tasks do
+        load 'malachite/tasks/malachite.rake'
+      end
     end
   end
 end
