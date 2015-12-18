@@ -19,7 +19,7 @@ module Malachite
 end
 
 if defined?(::Rails::Engine)
-  require 'malachite/rails'
+  require 'malachite/railtie'
 else
   fail "Malachite #{Malachite::VERSION} is a Rails-only Gem"
 end
