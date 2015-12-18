@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'http://www.zhubert.com'
   spec.license       = 'MIT'
 
-  spec.files         = `git ls-files`
+  spec.files         = `git ls-files`.split("\n")
   spec.name          = 'malachite'
   spec.require_paths = ['lib']
   spec.version       = Malachite::VERSION
