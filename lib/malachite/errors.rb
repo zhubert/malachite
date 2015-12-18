@@ -1,3 +1,4 @@
 module Malachite
-  class ConfigError < StandardError; end
+  class BuildError < StandardError; end
+  class DLError < StandardError; end
 end

@@ -14,7 +14,6 @@ module Malachite
       Malachite.load_json(ptr.to_s)
     end
 
-    # Malachite::Client.upcase(["foo", "bar"])
     def self.method_missing(name, args)
       new.call_method(name, args)
     end
@@ -23,6 +22,8 @@ module Malachite
 
     def open_dlib
       Fiddle.dlopen(shared_object_path)
+    rescue Fiddle::DLError
+      raise Malachite::DLError
     end
 
     def shared_object_path
