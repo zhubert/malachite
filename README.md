@@ -16,13 +16,13 @@ Make a subdirectory of "app" called "go".
 
 ### Write Some Go Functions
 
-Everything in "app/go" will get compiled into one namespace, so to get it to work with
+Everything in ```app/go```will get compiled into one namespace, so to get it to work with
 Malachite, you need to:
 
-* name the methods you want exported like: "HandleFoo"
-* the Handle methods can only take one argument (use structs for more complexity)
+* name the methods you want exported like: ```HandleFoo```
+* the Handle methods can only take one argument (use [structs](https://github.com/zhubert/malachite/blob/master/examples/struct.md) for more complexity)
 
-For instance, if you wanted to upcase strings more quickly in your Rails app, you'd put the following in the file "app/go/upcase.go":
+For instance, if you wanted to upcase strings more quickly in your Rails app, you'd put the following in the file ```app/go/upcase.go```:
 
 ```go
 package main
@@ -46,73 +46,17 @@ Malachite::Client.upcase(["foo","bar"])
 => ["FOO", "BAR"]
 ```
 
-Or if you have more interesting data organize it with a struct:
+More examples can be found in [examples](https://github.com/zhubert/malachite/tree/master/examples).
 
-```go
-package main
+### Testing
 
-import "strings"
-
-type Person struct {
-	Name string `json:"name"`
-	Age  string `json:"age"`
-}
-
-func HandleStructured(people []Person) (upperCasedPeople []Person) {
-	for _, person := range people {
-		upCase := Person{strings.ToUpper(person.Name), person.Age}
-		upperCasedPeople = append(upperCasedPeople, upCase)
-	}
-	return
-}
-```
-
-```ruby
-peeps = [{name: 'Peter', age: '27'},{name: 'Tim', age: '30'}]
-Malachite::Client.structured(peeps)
-=> [{"name"=>"PETER", "age"=>"27"}, {"name"=>"TIM", "age"=>"30"}]
-```
-
-Or even something totally arbitrary:
-
-```go
-package main
-
-import "strings"
-
-type Person struct {
-	Name string `json:"name"`
-}
-
-type Foo struct {
-	Friends []Person `json:"friends"`
-	Enemies []Person `json:"enemies"`
-}
-
-func HandleFrenemies(foo Foo) (frenemies []Person) {
-	for _, friend := range foo.Friends {
-		for _, enemy := range foo.Enemies {
-			if friend.Name == enemy.Name {
-				frenemies = append(frenemies, friend)
-			}
-		}
-	}
-	return
-}
-```
-
-```ruby
-friends = [{name: 'Peter'},{name: 'Tim'}]
-enemies = [{name: 'Peter'},{name: 'Zeb'}]
-Malachite::Client.frenemies({friends: friends, enemies: enemies})
-=> [{"name"=>"Peter"}]
-```
+I'd encourage writing tests for your Go code in the usual fashion. ```app/go/upcase_test.go``` would be the right place for it in the example above.
 
 ### How Does it Work?
 
-Some code trickery, quite honestly.
+One part code generation, another part pure evil.
 
-* The first time the function is called, Malachite will build a shared library from all the Go code in your "app/go" folder
+* The first time the function is called, Malachite will build a shared library from all the Go code in your ```app/go``` folder
 * It then uses Ruby's Fiddle to call the shared library
 * Arguments are passed back and forth via JSON
 
@@ -121,9 +65,3 @@ Because of the JSON step, you'll only see real performance gains on computationa
 ### Ruby 2.2.4+
 
 It's strongly recommended to use the [newest release of Ruby](https://www.ruby-lang.org/en/news/2015/12/16/unsafe-tainted-string-usage-in-fiddle-and-dl-cve-2015-7551/) as there was a security issue with older versions of Fiddle.
-
-### TODO
-
-* Confirm Go's existence, raise exception on build
-* Error handling
-* Benchmark performance...roughly
