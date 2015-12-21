@@ -20,7 +20,7 @@ Everything in ```app/go```will get compiled into one namespace, so to get it to 
 Malachite, you need to:
 
 * name the methods you want exported like: ```HandleFoo```
-* the Handle methods can only take one argument (use [structs](https://github.com/zhubert/malachite/blob/master/examples/struct.md) for more complexity)
+* the Handle methods can only take one argument (use [structs](https://github.com/zhubert/malachite/wiki/Structs) for more complexity)
 
 For instance, if you wanted to upcase strings more quickly in your Rails app, you'd put the following in the file ```app/go/upcase.go```:
 
@@ -46,11 +46,13 @@ Malachite::Client.upcase(["foo","bar"])
 => ["FOO", "BAR"]
 ```
 
-More examples can be found in [examples](https://github.com/zhubert/malachite/tree/master/examples).
+More examples can be found in [examples](https://github.com/zhubert/malachite/wiki/Examples).
 
 ### Testing
 
 I'd encourage writing tests for your Go code in the usual fashion. ```app/go/upcase_test.go``` would be the right place for it in the example above.
+
+Slightly more detail found in [Testing](https://github.com/zhubert/malachite/wiki/Testing)
 
 ### How Does it Work?
 
