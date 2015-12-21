@@ -11,6 +11,10 @@ require 'malachite/file_compiler'
 require 'malachite/compiler'
 
 module Malachite
+  def self.method_missing(name, args)
+    Malachite::Client.new(name, args).call
+  end
+
   def self.load_json(string)
     JSON.parse(string)
   end
