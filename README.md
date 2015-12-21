@@ -9,7 +9,7 @@ Install [Go 1.5 or later](https://golang.org/doc/install) on relevant machines.
 Add this to your Gemfile:
 
 ```ruby
-gem 'malachite', github: 'zhubert/malachite'
+gem 'malachite'
 ```
 
 Make a subdirectory of "app" called "go".
@@ -42,7 +42,7 @@ func HandleUpcase(things []string) (upperCased []string) {
 Then use your function from Rails:
 
 ```ruby
-Malachite::Client.upcase(["foo","bar"])
+Malachite.upcase(["foo","bar"])
 => ["FOO", "BAR"]
 ```
 
