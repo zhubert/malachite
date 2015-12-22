@@ -8,3 +8,7 @@
 0.1000 UNKNOWN
 ------
 0.3831 Actual total
+
+### After Function Cache
+
+Total < 0.200
