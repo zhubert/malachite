@@ -8,27 +8,7 @@ module Malachite
     end
 
     def call
-      fiddle_function.call(@args).to_s
-    end
-
-    private
-
-    def fiddle_function
-      Fiddle::Function.new(open_dylib[called_method], [Fiddle::TYPE_VOIDP], Fiddle::TYPE_VOIDP)
-    end
-
-    def called_method
-      "call#{@name.to_s.camelize}"
-    end
-
-    def open_dylib
-      Fiddle.dlopen(shared_object_path)
-    rescue Fiddle::DLError
-      raise Malachite::DLError, 'Unable to open dynamic library.'
-    end
-
-    def shared_object_path
-      Malachite::Compiler.new.compile
+      Malachite.from_function_cache(@name).call(@args).to_s
     end
   end
 end
