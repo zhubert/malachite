@@ -1,6 +1,6 @@
 ### Malachite
 
-A RubyGem which enables calling Go code from Rails.
+A RubyGem which enables calling Go code from Rails. Probably not production ready.
 
 ### Installation
 
