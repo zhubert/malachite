@@ -20,7 +20,7 @@ Everything in ```app/go```will get compiled into one namespace, so to get it to 
 Malachite, you need to:
 
 * name the methods you want exported like: ```HandleFoo```
-* the Handle methods can only take one argument, works best with  [structs](https://github.com/zhubert/malachite/wiki/Structs)
+* the Handle methods can only take one JSON-serializable argument, works best with arrays or [structs](https://github.com/zhubert/malachite/wiki/Structs)
 
 For instance, if you wanted to upcase strings more quickly in your Rails app, you'd put the following in the file ```app/go/upcase.go```:
 
