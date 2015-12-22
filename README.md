@@ -48,6 +48,8 @@ Malachite.upcase(["foo","bar"])
 
 More examples can be found in [examples](https://github.com/zhubert/malachite/wiki/Examples).
 
+Note: This would actually be slower than doing it in Ruby, due to the JSON serialization.
+
 ### Testing
 
 I'd encourage writing tests for your Go code in the usual fashion. ```app/go/upcase_test.go``` would be the right place for it in the example above.
