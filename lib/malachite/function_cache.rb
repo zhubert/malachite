@@ -3,6 +3,10 @@ module Malachite
     @function_cache ||= {}
   end
 
+  def self.function_cache=(cache)
+    @function_cache = cache
+  end
+
   def self.from_function_cache(method_name)
     existing_function = Malachite.function_cache[method_name]
     return existing_function if existing_function.present?
@@ -10,9 +14,10 @@ module Malachite
   end
 
   def self.add_to_function_cache(method_name)
-    @function_cache ||= {}
+    function_cache = Malachite.function_cache
     function = Malachite.fiddle_function(method_name)
-    @function_cache[method_name] = function
+    function_cache[method_name] = function
+    Malachite.function_cache = function_cache
     function
   end
 
