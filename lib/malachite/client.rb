@@ -22,13 +22,13 @@ module Malachite
     def args_to_json
       Malachite.dump_json(@args)
     rescue JSON::GeneratorError
-      raise Malachite::ArgumentError, 'Arguments should be serializable. Try arrays or objects.'
+      raise Malachite::ArgumentError, "Arguments should be serializable. Try arrays or objects: #{@args.inspect}"
     end
 
     def response_from_json(response)
       Malachite.load_json(response)
     rescue JSON::ParserError
-      raise Malachite::ResponseError, 'Go program did not provide a serializable response.'
+      raise Malachite::ResponseError, "Go program did not provide a serializable response: #{response.inspect}"
     end
   end
 end
