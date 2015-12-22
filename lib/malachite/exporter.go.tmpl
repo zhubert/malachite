@@ -5,5 +5,7 @@ func callXXXXXX(data *C.char) *C.char {
 	if err != nil {
 		return C.CString(err.Error())
 	}
-	return C.CString(Marshal(HandleXXXXXX(things)))
+	marshaled := C.CString(Marshal(HandleXXXXXX(things)))
+	defer C.free(unsafe.Pointer(marshaled))
+	return marshaled
 }

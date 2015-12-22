@@ -7,7 +7,9 @@ module Malachite
     def compile
       File.open(path_to_tmp_file(@file), 'w') do |file|
         file.puts 'package main'
+        file.puts '// #include <stdlib.h>'
         file.puts "import \"C\""
+        file.puts "import \"unsafe\""
         file.puts source_file(@file)
         file.puts exporter_boilerplate(@file)
         file.close
