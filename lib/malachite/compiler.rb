@@ -14,7 +14,7 @@ module Malachite
     def compile!
       modify_source_files_in_tmp
       unless system('go', 'build', '-buildmode=c-shared', '-o', @compiled_file, *modified_go_files)
-        fail Malachite::BuildError, 'Unable to Build Shared Library'
+        fail Malachite::BuildError, 'Unable to Build Shared Library, is tmp writable?'
       end
       path_to_compiled_file
     end

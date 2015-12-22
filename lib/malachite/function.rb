@@ -24,7 +24,7 @@ module Malachite
     def open_dylib
       Fiddle.dlopen(shared_object_path)
     rescue Fiddle::DLError
-      raise Malachite::DLError
+      raise Malachite::DLError, 'Unable to open dynamic library.'
     end
 
     def shared_object_path

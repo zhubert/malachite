@@ -16,13 +16,13 @@ Make a subdirectory of "app" called "go".
 
 ### Write Some Go Functions
 
-Everything in ```app/go```will get compiled into one namespace, so to get it to work with
+Everything in ```app/go```will get compiled into one library, so to get it to work with
 Malachite, you need to:
 
 * name the methods you want exported like: ```HandleFoo```
 * the Handle methods can only take one JSON-serializable argument, works best with arrays or [structs](https://github.com/zhubert/malachite/wiki/Structs)
 
-For instance, if you wanted to upcase strings more quickly in your Rails app, you'd put the following in the file ```app/go/upcase.go```:
+For instance, if you wanted to upcase strings, you'd put the following in ```app/go/upcase.go```:
 
 ```go
 package main
@@ -52,9 +52,7 @@ Note: This would actually be slower than doing it in Ruby, due to the JSON seria
 
 ### Testing
 
-I'd encourage writing tests for your Go code in the usual fashion. ```app/go/upcase_test.go``` would be the right place for it in the example above.
-
-Slightly more detail found in [Testing](https://github.com/zhubert/malachite/wiki/Testing)
+Check out the wiki on [Testing](https://github.com/zhubert/malachite/wiki/Testing)
 
 ### How Does it Work?
 
