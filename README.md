@@ -21,7 +21,6 @@ Malachite, you need to:
 
 * name the methods you want exported like: ```HandleFoo```
 * the Handle methods can only take one JSON-serializable argument, works best with arrays or [structs](https://github.com/zhubert/malachite/wiki/Structs)
-* Go routines seem to leak memory in cgo, avoid :(
 
 For instance, if you wanted to upcase strings, you'd put the following in ```app/go/upcase.go```:
 
