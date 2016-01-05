@@ -32,7 +32,7 @@ module Malachite
     def extract_method_and_type(source_file_path)
       handler_code = File.read(source_file_path)
       match = /^func Handle(.*?)\(\w+ (.*?)\)/.match(handler_code)
-      [match[1], match[2]]
+      [match[1], match[2]] if match.present?
     end
 
     def path_to_tmp_file(file)
