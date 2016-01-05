@@ -26,7 +26,11 @@ module Malachite
     def exporter_boilerplate(file)
       exporter = File.read(File.expand_path('../exporter.go.tmpl', __FILE__))
       method_name, method_type = extract_method_and_type(file)
-      exporter.gsub(/YYYYYY/, "#{method_type}{}").gsub(/XXXXXX/, method_name)
+      if method_name.present?
+        return exporter.gsub(/YYYYYY/, "#{method_type}{}").gsub(/XXXXXX/, method_name)
+      else
+        return ''
+      end
     end
 
     def extract_method_and_type(source_file_path)
