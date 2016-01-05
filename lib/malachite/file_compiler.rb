@@ -31,7 +31,7 @@ module Malachite
       return exporter.gsub(/YYYYYY/, "#{method_type}{}").gsub(/XXXXXX/, method_name)
     end
 
-    def file_has_handle_function?(file)
+    def file_has_handle_function?(f)
       source = File.read(f)
       match = /^func Handle(.*?)\(\w+ (.*?)\)/.match(source)
       match.present?
