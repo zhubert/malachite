@@ -28,6 +28,10 @@ module Malachite
     Malachite.options.fetch(:precompile, false)
   end
 
+  def self.precompile
+    Malachite.options[:precompile] = true
+  end
+
   def self.method_missing(name, args)
     Malachite::Client.new(name, args).call
   end
