@@ -12,12 +12,24 @@ require 'malachite/file_compiler'
 require 'malachite/compiler'
 
 module Malachite
-  def self.method_missing(name, args)
-    Malachite::Client.new(name, args).call
+  DEFAULTS = {
+    precompile: false
+  }
+
+  def self.options
+    @options ||= DEFAULTS.dup
   end
 
-  def self.precompile
-    Malachite::Compiler.new.compile
+  def self.options=(opts)
+    @options = opts
+  end
+
+  def self.precompile?
+    Malachite.options.fetch(:precompile, false)
+  end
+
+  def self.method_missing(name, args)
+    Malachite::Client.new(name, args).call
   end
 
   def self.load_json(string)
