@@ -34,7 +34,7 @@ module Malachite
     end
 
     def source_files
-      Dir["#{Rails.root.join('app', 'go')}/*.go"].reject { |f| f['test'] }
+      Dir["#{Rails.root.join('app', 'go')}/**/*.go"].reject { |f| f['test'] }
     end
 
     def main_boilerplate
