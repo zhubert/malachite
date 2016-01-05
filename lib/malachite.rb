@@ -16,6 +16,10 @@ module Malachite
     Malachite::Client.new(name, args).call
   end
 
+  def self.precompile
+    Malachite::Compiler.new.compile
+  end
+
   def self.load_json(string)
     JSON.parse(string)
   end
