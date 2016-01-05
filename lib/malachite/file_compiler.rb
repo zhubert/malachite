@@ -11,9 +11,11 @@ module Malachite
           file.puts '// #include <stdlib.h>'
           file.puts "import \"C\""
           file.puts "import \"unsafe\""
+          file.puts source_file(@file)
           file.puts exporter_boilerplate(@file)
+        else
+          file.puts File.read(@file)
         end
-        file.puts source_file(@file)
         file.close
       end
     end
