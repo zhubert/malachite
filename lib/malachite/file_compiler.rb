@@ -6,12 +6,14 @@ module Malachite
 
     def compile
       File.open(path_to_tmp_file(@file), 'w') do |file|
-        file.puts 'package main'
-        file.puts '// #include <stdlib.h>'
-        file.puts "import \"C\""
-        file.puts "import \"unsafe\""
+        if file_has_handle_function?(@file)
+          file.puts 'package main'
+          file.puts '// #include <stdlib.h>'
+          file.puts "import \"C\""
+          file.puts "import \"unsafe\""
+          file.puts exporter_boilerplate(@file)
+        end
         file.puts source_file(@file)
-        file.puts exporter_boilerplate(@file)
         file.close
       end
     end
@@ -26,17 +28,19 @@ module Malachite
     def exporter_boilerplate(file)
       exporter = File.read(File.expand_path('../exporter.go.tmpl', __FILE__))
       method_name, method_type = extract_method_and_type(file)
-      if method_name.present?
-        return exporter.gsub(/YYYYYY/, "#{method_type}{}").gsub(/XXXXXX/, method_name)
-      else
-        return ''
-      end
+      return exporter.gsub(/YYYYYY/, "#{method_type}{}").gsub(/XXXXXX/, method_name)
+    end
+
+    def file_has_handle_function?(file)
+      source = File.read(f)
+      match = /^func Handle(.*?)\(\w+ (.*?)\)/.match(source)
+      match.present?
     end
 
     def extract_method_and_type(source_file_path)
       handler_code = File.read(source_file_path)
       match = /^func Handle(.*?)\(\w+ (.*?)\)/.match(handler_code)
-      [match[1], match[2]] if match.present?
+      [match[1], match[2]]
     end
 
     def path_to_tmp_file(file)
