@@ -9,6 +9,7 @@ module Malachite
         if file_has_handle_function?(@file)
           file.puts 'package main'
           file.puts '// #include <stdlib.h>'
+          file.puts '// #include "ruby.h"'
           file.puts "import \"C\""
           file.puts "import \"unsafe\""
           file.puts source_file(@file)
