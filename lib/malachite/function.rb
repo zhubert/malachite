@@ -8,7 +8,7 @@ module Malachite
     end
 
     def call
-      Malachite.from_function_cache(@name).call(@args).to_s
+      Malachite.from_function_cache(@name).call(@args).to_value
     end
   end
 end

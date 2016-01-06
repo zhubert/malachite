@@ -1,11 +1,14 @@
 //export callXXXXXX
-func callXXXXXX(data *C.char) *C.char {
+func callXXXXXX(data *C.char) C.VALUE {
 	things := YYYYYY
 	err := Unmarshal(C.GoString(data), &things)
 	if err != nil {
-		return C.CString(err.Error())
+		str := err.Error()
+		cstr := GOSTRING_PTR(str)
+		return C.rb_utf8_str_new(cstr, C.long(len(str)))
+	} else {
+		str := Marshal(HandleXXXXXX(things))
+		cstr := GOSTRING_PTR(str)
+		return C.rb_utf8_str_new(cstr, C.long(len(str)))
 	}
-	marshaled := C.CString(Marshal(HandleXXXXXX(things)))
-	defer C.free(unsafe.Pointer(marshaled))
-	return marshaled
 }
