@@ -1,0 +1,8 @@
+package main
+
+// #cgo darwin LDFLAGS: -Wl,-undefined -Wl,dynamic_lookup
+// #cgo !darwin LDFLAGS: -Wl,-unresolved-symbols=ignore-all
+// #include <stdlib.h>
+// #include "ruby/ruby.h"
+// VALUE rb_utf8_str_new(const char *str, long len);
+import "C"

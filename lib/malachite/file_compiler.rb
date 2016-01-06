@@ -7,11 +7,7 @@ module Malachite
     def compile
       File.open(path_to_tmp_file(@file), 'w') do |file|
         if file_has_handle_function?(@file)
-          file.puts 'package main'
-          file.puts '// #include <stdlib.h>'
-          file.puts '// #include "ruby.h"'
-          file.puts "import \"C\""
-          file.puts "import \"unsafe\""
+          file.puts cgo_tmpl
           file.puts source_file(@file)
           file.puts exporter_boilerplate(@file)
         else
@@ -22,6 +18,10 @@ module Malachite
     end
 
     private
+
+    def cgo_tmpl
+      File.read(File.expand_path('../cgo.tmpl', __FILE__))
+    end
 
     def source_file(f)
       source = File.read(f)
