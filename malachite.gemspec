@@ -4,8 +4,8 @@ require File.expand_path('../lib/malachite/version', __FILE__)
 Gem::Specification.new do |spec|
   spec.authors       = ['Zack Hubert']
   spec.email         = ['zhubert@gmail.com']
-  spec.summary       = 'A RubyGem which enables calling Go code from Ruby'
-  spec.description   = 'A RubyGem which enables calling Go code from Ruby.'
+  spec.summary       = 'A RubyGem which enables calling Go code from Rails'
+  spec.description   = 'A RubyGem which enables calling Go code from Rails.'
   spec.homepage      = 'http://www.zhubert.com'
   spec.license       = 'MIT'
 

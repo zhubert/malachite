@@ -16,7 +16,7 @@ Make a subdirectory of "app" called "go".
 
 ### Write Some Go Functions
 
-Everything in ```app/go```will get compiled into one library, so to get it to work with
+Everything in ```app/go``` will get compiled into one library, so to get it to work with
 Malachite, you need to:
 
 * name the methods you want exported like: ```HandleFoo```
@@ -63,6 +63,12 @@ One part code generation, another part pure evil.
 * Arguments are passed back and forth via JSON
 
 Because of the JSON step, you'll only see real performance gains on computationally difficult tasks. Ruby's JSON conversion is a large tax.
+
+Note: You can also request precompilation. In an initializer:
+
+```ruby
+Malachite.precompile
+```
 
 ### Ruby 2.2.4+
 

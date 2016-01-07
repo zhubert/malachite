@@ -13,8 +13,11 @@ module Malachite
 
     def compile!
       modify_source_files_in_tmp
+      if modified_go_files == []
+        fail Malachite::BuildError, 'Nothing to build, there are no Go files in tmp'
+      end
       unless system('go', 'build', '-buildmode=c-shared', '-o', @compiled_file, *modified_go_files)
-        fail Malachite::BuildError, 'Unable to Build Shared Library, is tmp writable?'
+        fail Malachite::BuildError, 'Unable to Build Shared Library, is Go 1.5+ installed?'
       end
       path_to_compiled_file
     end
