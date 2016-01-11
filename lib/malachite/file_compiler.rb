@@ -20,7 +20,8 @@ module Malachite
     private
 
     def cgo_tmpl
-      File.read(File.expand_path('../cgo.tmpl', __FILE__))
+      cgo = File.read(File.expand_path('../cgo.tmpl', __FILE__))
+      return cgo.gsub(/HEADER/, RbConfig::CONFIG['rubyhdrdir']).gsub(/ARCH/, RbConfig::CONFIG['rubyarchhdrdir'])
     end
 
     def source_file(f)
