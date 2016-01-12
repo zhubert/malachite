@@ -6,8 +6,7 @@ tags
 *.gem
 dump.db
 .rbx
-coverage/
-vendor/
 .bundle/
-tmp/
-test/dummy/tmp/
+test/dummy/tmp/*.go
+test/dummy/tmp/*.so
+test/dummy/tmp/*.h
