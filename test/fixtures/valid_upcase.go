@@ -2,7 +2,7 @@ package main
 
 // #cgo darwin LDFLAGS: -Wl,-undefined -Wl,dynamic_lookup
 // #cgo !darwin LDFLAGS: -Wl,-unresolved-symbols=ignore-all
-// #cgo CFLAGS: -I/Users/zhubert/.rbenv/versions/2.2.4/include/ruby-2.2.0/ -I/Users/zhubert/.rbenv/versions/2.2.4/include/ruby-2.2.0/x86_64-darwin15/
+// #cgo CFLAGS: -IHEADER/ -IARCH/
 // #include <stdlib.h>
 // #include "ruby/ruby.h"
 import "C"

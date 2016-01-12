@@ -3,6 +3,7 @@ fail "Malachite #{Malachite::VERSION} does not support Ruby < 2.0.0" if RUBY_VER
 
 require 'json'
 require 'fiddle'
+require 'active_support/all'
 
 require 'malachite/errors'
 require 'malachite/function_cache'

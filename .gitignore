@@ -10,4 +10,4 @@ coverage/
 vendor/
 .bundle/
 tmp/
-test/tmp/
+test/dummy/tmp/

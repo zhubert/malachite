@@ -9,7 +9,7 @@ module Malachite
 
   def self.from_function_cache(method_name)
     existing_function = Malachite.function_cache[method_name]
-    return existing_function if existing_function.present?
+    return existing_function if existing_function != nil
     Malachite.add_to_function_cache(method_name)
   end
 

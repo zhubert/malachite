@@ -25,8 +25,7 @@ module Malachite
     end
 
     def source_file(f)
-      source = File.read(f)
-      source.gsub(/package main/, '')
+      File.readlines(f).drop(1)
     end
 
     def exporter_boilerplate(file)
