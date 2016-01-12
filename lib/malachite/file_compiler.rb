@@ -38,7 +38,7 @@ module Malachite
     def file_has_handle_function?(f)
       source = File.read(f)
       match = /^func Handle(.*?)\(\w+ (.*?)\)/.match(source)
-      match.present?
+      match != nil
     end
 
     def extract_method_and_type(source_file_path)
