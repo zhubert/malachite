@@ -18,6 +18,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'json', '~> 1.0'
   spec.add_development_dependency 'bundler', '~> 1.9'
   spec.add_development_dependency 'rake', '~> 10.0'
-  spec.add_development_dependency 'minitest', '~> 4.7.3'
-  spec.add_development_dependency 'activesupport'
+  spec.add_development_dependency 'minitest', '~> 5'
+  spec.add_development_dependency 'activesupport', '~> 4'
 end
