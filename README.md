@@ -1,6 +1,6 @@
 ### Malachite
 
-A RubyGem which enables calling Go code from Rails. Probably not production ready.
+A RubyGem which enables calling Go code from Rails.
 
 ### Installation
 
@@ -73,3 +73,7 @@ Malachite.precompile
 ### Ruby 2.2.4+
 
 It's strongly recommended to use the [newest release of Ruby](https://www.ruby-lang.org/en/news/2015/12/16/unsafe-tainted-string-usage-in-fiddle-and-dl-cve-2015-7551/) as there was a security issue with older versions of Fiddle.
+
+### Production Readiness
+
+Likely more gotchas with architecture variations and Cgo. Submit a PR if you find something.
