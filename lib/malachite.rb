@@ -1,7 +1,7 @@
 require 'malachite/version'
 fail "Malachite #{Malachite::VERSION} does not support Ruby < 2.0.0" if RUBY_VERSION < '2.0.0'
 
-require 'json'
+require 'multi_json'
 require 'fiddle'
 require 'active_support/all'
 
@@ -38,11 +38,11 @@ module Malachite
   end
 
   def self.load_json(string)
-    JSON.parse(string)
+    MultiJson.load(string)
   end
 
   def self.dump_json(object)
-    JSON.generate(object)
+    MultiJson.dump(object)
   end
 end
 
