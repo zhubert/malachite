@@ -2,17 +2,21 @@
 
 Call Go functions directly from Rails.
 
+### Requirements
+
+Requires Ruby >= 2.0.0, Go 1.5 <-> 1.8.
+
+Xcode 8.3 is broken, do not use until [this is fixed](https://github.com/golang/go/issues/19734)
+
 ### Installation
 
-Install [Go 1.5 or later](https://golang.org/doc/install) on relevant machines.
+Install [Go](https://golang.org/doc/install). You must have a proper GOPATH.
 
 Add this to your Gemfile:
 
 ```ruby
 gem 'malachite'
 ```
-
-Make a subdirectory of "app" called "go".
 
 ### Write Some Go Functions
 
@@ -56,7 +60,7 @@ Check out the wiki on [Testing](https://github.com/zhubert/malachite/wiki/Testin
 
 ### How Does it Work?
 
-One part code generation, another part pure evil.
+Code generation.
 
 * The first time the function is called, Malachite will build a shared library from all the Go code in your ```app/go``` folder
 * It then uses Ruby's Fiddle to call the shared library
@@ -64,7 +68,7 @@ One part code generation, another part pure evil.
 
 Because of the JSON step, you'll only see real performance gains on computationally difficult tasks. Ruby's JSON conversion is a large tax.
 
-Note: You can also request precompilation. In an initializer:
+Note: You can also request precompilation. This is helpful for production environments. In an initializer:
 
 ```ruby
 Malachite.precompile

@@ -1,6 +1,5 @@
 Gemfile.lock
 .rvmrc
-.ruby-version
 tags
 *.swp
 *.gem

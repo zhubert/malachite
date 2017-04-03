@@ -2,10 +2,11 @@ module Malachite
   class Compiler
     def initialize
       @compiled_file = path_to_compiled_file
+      @compiled_header = path_to_compiled_header
     end
 
     def compile
-      return @compiled_file if File.exist?(@compiled_file)
+      return @compiled_file if File.exist?(@compiled_file) && File.exist?(@compiled_header)
       compile!
     end
 
@@ -13,12 +14,23 @@ module Malachite
 
     def compile!
       modify_source_files_in_tmp
+
       if modified_go_files == []
         fail Malachite::BuildError, 'Nothing to build, there are no Go files in tmp'
       end
+
       unless system('go', 'build', '-buildmode=c-shared', '-o', @compiled_file, *modified_go_files)
         fail Malachite::BuildError, 'Unable to Build Shared Library, is Go 1.5+ installed?'
       end
+
+      unless File.exist?(@compiled_header)
+        fail Malachite::BuildError, 'Unable to Build Header File'
+      end
+
+      unless File.exist?(@compiled_file)
+        fail Malachite::BuildError, 'Unable to Build Shared Object'
+      end
+
       path_to_compiled_file
     end
 
@@ -46,6 +58,10 @@ module Malachite
 
     def path_to_compiled_file
       Rails.root.join('tmp', 'malachite.so').to_s
+    end
+
+    def path_to_compiled_header
+      Rails.root.join('tmp', 'malachite.h').to_s
     end
   end
 end

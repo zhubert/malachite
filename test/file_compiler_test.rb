@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class FileCompilerTest < MiniTest::Unit::TestCase
+class FileCompilerTest < MiniTest::Test
   def setup
     @source = Malachite::FileCompiler.new(Rails.root.join('app', 'go', 'upcase.go')).compile
   end
