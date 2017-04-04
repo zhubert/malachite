@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class ClientTest < MiniTest::Unit::TestCase
+class ClientTest < MiniTest::Test
   def setup
     @client = Malachite::Client.new('upcase', ['foo'])
   end
