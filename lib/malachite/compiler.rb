@@ -16,19 +16,19 @@ module Malachite
       modify_source_files_in_tmp
 
       if modified_go_files == []
-        fail Malachite::BuildError, 'Nothing to build, there are no Go files in tmp'
+        raise Malachite::BuildError, 'Nothing to build, there are no Go files in tmp'
       end
 
-      unless system('go', 'build', '-buildmode=c-shared', '-o', @compiled_file, *modified_go_files)
-        fail Malachite::BuildError, 'Unable to Build Shared Library, is Go 1.5+ installed?'
+      unless system({ 'CGO_ENABLED' => '1' }, 'go', 'build', '-buildmode=c-shared', '-o', @compiled_file, *modified_go_files)
+        raise Malachite::BuildError, 'Unable to Build Shared Library, is Go 1.5+ installed?'
       end
 
       unless File.exist?(@compiled_header)
-        fail Malachite::BuildError, 'Unable to Build Header File'
+        raise Malachite::BuildError, 'Unable to Build Header File'
       end
 
       unless File.exist?(@compiled_file)
-        fail Malachite::BuildError, 'Unable to Build Shared Object'
+        raise Malachite::BuildError, 'Unable to Build Shared Object'
       end
 
       path_to_compiled_file

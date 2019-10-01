@@ -4,7 +4,7 @@ Call Go functions directly from Rails.
 
 ### Requirements
 
-Requires Ruby >= 2.0.0, Go 1.5 <-> 1.8.
+Requires Ruby >= 2.0.0, Go 1.5 <-> 1.11.
 
 Xcode 8.3 is broken, do not use until [this is fixed](https://github.com/golang/go/issues/19734)
 
