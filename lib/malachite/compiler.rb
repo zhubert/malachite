@@ -19,8 +19,10 @@ module Malachite
         raise Malachite::BuildError, 'Nothing to build, there are no Go files in tmp'
       end
 
-      unless system({ 'CGO_ENABLED' => '1' }, 'go', 'build', '-buildmode=c-shared', '-o', @compiled_file, *modified_go_files)
-        raise Malachite::BuildError, 'Unable to Build Shared Library, is Go 1.5+ installed?'
+      output=`CGO_ENABLED=1 go build -buildmode=c-shared -o #{@compiled_file} #{modified_go_files} 2>&1`; result=$?.success?
+      # unless system({ 'CGO_ENABLED' => '1' }, 'go', 'build', '-buildmode=c-shared', '-o', @compiled_file, *modified_go_files)
+      if result
+        raise Malachite::BuildError, "Unable to Build Shared Library: #{output}"
       end
 
       unless File.exist?(@compiled_header)
