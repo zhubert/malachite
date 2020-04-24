@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+require 'English'
+require 'open3'
+
 module Malachite
   class Compiler
     def initialize
@@ -7,6 +12,7 @@ module Malachite
 
     def compile
       return @compiled_file if File.exist?(@compiled_file) && File.exist?(@compiled_header)
+
       compile!
     end
 
@@ -15,21 +21,12 @@ module Malachite
     def compile!
       modify_source_files_in_tmp
 
-      if modified_go_files == []
-        raise Malachite::BuildError, 'Nothing to build, there are no Go files in tmp'
-      end
+      raise Malachite::BuildError, 'Nothing to build, there are no Go files in tmp' if modified_go_files == []
 
-      unless system({ 'CGO_ENABLED' => '1' }, 'go', 'build', '-buildmode=c-shared', '-o', @compiled_file, *modified_go_files)
-        raise Malachite::BuildError, 'Unable to Build Shared Library, is Go 1.5+ installed?'
-      end
-
-      unless File.exist?(@compiled_header)
-        raise Malachite::BuildError, 'Unable to Build Header File'
-      end
-
-      unless File.exist?(@compiled_file)
-        raise Malachite::BuildError, 'Unable to Build Shared Object'
-      end
+      stdout, stderr, status = Open3.capture3({ 'CGO_ENABLED' => '1' }, 'go', 'build', '-buildmode=c-shared', '-o', @compiled_file, *modified_go_files)
+      raise Malachite::BuildError, "Unable to Build Shared Library: #{stdout} #{stderr}" unless status.success?
+      raise Malachite::BuildError, 'Unable to Build Header File' unless File.exist?(@compiled_header)
+      raise Malachite::BuildError, 'Unable to Build Shared Object' unless File.exist?(@compiled_file)
 
       path_to_compiled_file
     end
@@ -38,6 +35,7 @@ module Malachite
       source_files.each do |f|
         Malachite::FileCompiler.new(f).compile
       end
+
       File.open(Rails.root.join('tmp', 'main.go').to_s, 'w') do |file|
         file.puts main_boilerplate
         file.close
@@ -53,7 +51,7 @@ module Malachite
     end
 
     def main_boilerplate
-      File.read(File.expand_path('../main.go.tmpl', __FILE__))
+      File.read(File.expand_path('main.go.tmpl', __dir__))
     end
 
     def path_to_compiled_file

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Malachite
   class Client
     def initialize(name, args)

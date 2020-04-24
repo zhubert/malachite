@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Malachite
   class BuildError < StandardError; end
   class ArgumentError < StandardError; end
