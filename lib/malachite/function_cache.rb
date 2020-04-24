@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Malachite
   def self.function_cache
     @function_cache ||= {}
@@ -9,7 +11,8 @@ module Malachite
 
   def self.from_function_cache(method_name)
     existing_function = Malachite.function_cache[method_name]
-    return existing_function if existing_function != nil
+    return existing_function unless existing_function.nil?
+
     Malachite.add_to_function_cache(method_name)
   end
 
@@ -37,6 +40,6 @@ module Malachite
   end
 
   def self.shared_object_path
-    @so_path ||= Malachite::Compiler.new.compile
+    @shared_object_path ||= Malachite::Compiler.new.compile
   end
 end

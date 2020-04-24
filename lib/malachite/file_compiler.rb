@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Malachite
   class FileCompiler
     def initialize(file)
@@ -20,22 +22,22 @@ module Malachite
     private
 
     def cgo_tmpl
-      cgo = File.read(File.expand_path('../cgo.tmpl', __FILE__))
-      return cgo.gsub(/HEADER/, RbConfig::CONFIG['rubyhdrdir']).gsub(/ARCH/, RbConfig::CONFIG['rubyarchhdrdir'])
+      cgo = File.read(File.expand_path('cgo.tmpl', __dir__))
+      cgo.gsub(/HEADER/, RbConfig::CONFIG['rubyhdrdir']).gsub(/ARCH/, RbConfig::CONFIG['rubyarchhdrdir'])
     end
 
-    def source_file(f)
-      File.readlines(f).drop(1)
+    def source_file(file)
+      File.readlines(file).drop(1)
     end
 
     def exporter_boilerplate(file)
-      exporter = File.read(File.expand_path('../exporter.go.tmpl', __FILE__))
+      exporter = File.read(File.expand_path('exporter.go.tmpl', __dir__))
       method_name, method_type = extract_method_and_type(file)
-      return exporter.gsub(/YYYYYY/, "#{method_type}{}").gsub(/XXXXXX/, method_name)
+      exporter.gsub(/YYYYYY/, "#{method_type}{}").gsub(/XXXXXX/, method_name)
     end
 
-    def file_has_handle_function?(f)
-      source = File.read(f)
+    def file_has_handle_function?(file)
+      source = File.read(file)
       match = /^func Handle(.*?)\(\w+ (.*?)\)/.match(source)
       match != nil
     end

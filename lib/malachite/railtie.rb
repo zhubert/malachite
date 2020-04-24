@@ -1,22 +1,22 @@
+# frozen_string_literal: true
+
 module Malachite
-  def self.hook_rails!
-    Dir.glob(Rails.root.join('tmp', '*.so')).each do |file|
+  def self.setup!
+    Dir.glob(Rails.root.join('tmp', '*.{so,go,h}')).each do |file|
       File.delete(file)
     end
-    Dir.glob(Rails.root.join('tmp', '*.go')).each do |file|
-      File.delete(file)
-    end
-    Dir.glob(Rails.root.join('tmp', '*.h')).each do |file|
-      File.delete(file)
-    end
-    Malachite::Compiler.new.compile if Malachite.precompile?
+
+    Malachite::Compiler.new.compile
   end
-  class MalachiteRailtie < Rails::Railtie
+
+  class Railtie < Rails::Railtie
     rake_tasks do
       load 'malachite/tasks/malachite.rake'
     end
-    initializer 'malachite.configure_rails_initialization' do
-      Malachite.hook_rails!
+
+    # Executed once in production/staging and before each request in development.
+    config.to_prepare do
+      Malachite.setup!
     end
   end
 end

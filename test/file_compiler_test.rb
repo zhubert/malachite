@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class FileCompilerTest < MiniTest::Test
@@ -7,7 +9,7 @@ class FileCompilerTest < MiniTest::Test
 
   def test_confirm_compilation_matches_fixture
     compiled = File.read(Rails.root.join('tmp', 'upcase.go')).to_s
-    valid = File.read(File.expand_path('../fixtures/valid_upcase.go', __FILE__)).gsub(/HEADER/, RbConfig::CONFIG['rubyhdrdir']).gsub(/ARCH/, RbConfig::CONFIG['rubyarchhdrdir'])
+    valid = File.read(File.expand_path('fixtures/valid_upcase.go', __dir__)).gsub(/HEADER/, RbConfig::CONFIG['rubyhdrdir']).gsub(/ARCH/, RbConfig::CONFIG['rubyarchhdrdir'])
     assert_equal compiled, valid
   end
 end
